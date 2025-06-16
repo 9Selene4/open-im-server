@@ -20,10 +20,6 @@ import (
 	"github.com/openimsdk/open-im-server/v3/pkg/common/config"
 	"github.com/openimsdk/tools/discovery"
 	"github.com/openimsdk/tools/discovery/standalone"
-	"github.com/openimsdk/tools/utils/runtimeenv"
-	"google.golang.org/grpc"
-
-	"github.com/openimsdk/tools/discovery/kubernetes"
 
 	"github.com/openimsdk/tools/discovery/etcd"
 	"github.com/openimsdk/tools/errs"
@@ -34,13 +30,13 @@ func NewDiscoveryRegister(discovery *config.Discovery, watchNames []string) (dis
 	if config.Standalone() {
 		return standalone.GetSvcDiscoveryRegistry(), nil
 	}
-	if runtimeenv.RuntimeEnvironment() == config.KUBERNETES {
-		return kubernetes.NewKubernetesConnManager(discovery.Kubernetes.Namespace,
-			grpc.WithDefaultCallOptions(
-				grpc.MaxCallSendMsgSize(1024*1024*20),
-			),
-		)
-	}
+	// if runtimeenv.RuntimeEnvironment() == config.KUBERNETES {
+	// 	return kubernetes.NewKubernetesConnManager(discovery.Kubernetes.Namespace,
+	// 		grpc.WithDefaultCallOptions(
+	// 			grpc.MaxCallSendMsgSize(1024*1024*20),
+	// 		),
+	// 	)
+	// }
 
 	switch discovery.Enable {
 	case config.ETCD:
