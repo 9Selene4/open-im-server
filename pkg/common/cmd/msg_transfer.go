@@ -59,7 +59,11 @@ func (m *MsgTransferCmd) Exec() error {
 
 func (m *MsgTransferCmd) runE() error {
 	m.msgTransferConfig.Index = config.Index(m.Index())
-	var prometheus config.Prometheus
+	// var prometheus config.Prometheus
+	prometheus := config.Prometheus{
+		Enable: m.msgTransferConfig.MsgTransfer.Prometheus.Enable,
+		Ports:  m.msgTransferConfig.MsgTransfer.Prometheus.Ports,
+	}
 	return startrpc.Start(
 		m.ctx, &m.msgTransferConfig.Discovery,
 		&prometheus,
