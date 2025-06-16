@@ -53,11 +53,7 @@ func (a *CronTaskCmd) Exec() error {
 }
 
 func (a *CronTaskCmd) runE() error {
-	// var prometheus config.Prometheus
-	prometheus := config.Prometheus{
-		Enable: a.cronTaskConfig.API.Prometheus.Enable,
-		Ports:  a.cronTaskConfig.API.Prometheus.Ports,
-	}
+	var prometheus config.Prometheus
 	return startrpc.Start(
 		a.ctx, &a.cronTaskConfig.Discovery,
 		&prometheus,
